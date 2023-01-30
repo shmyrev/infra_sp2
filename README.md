@@ -1,73 +1,129 @@
-<<<<<<< HEAD
+
 # api_yamdb
-api_yamdb
-=======
-### Описание проекта:
+
+## Описание проекта:
+
+Проект YaMDb собирает отзывы пользователей на произведения. Произведения делятся на категории: «Книги», «Фильмы», «Музыка».\
 Учебный проект, предназначенный для отработки навыков и применение теории при командной
-разработки API для веб приложения YaMDb, базируемых на фреймворке Django и модуле Django Rest Framework.
+разработки API для веб приложения YaMDb, базируемых на фреймворке Django и модуле Django Rest Framework.\
 Для обеспечения контороля прав доступа в проекте используется модуль JWT-токен.
 
-### Установка и запуск проекта:
+## Установка и запуск проекта:
 
-Клонировать репозиторий и перейти в него в командной строке (испольщуем ssh):
-
-```
-https://github.com/shmyrev/api_yamdb.git
-```
+Клонировать репозиторий и перейти в него в командной строке:
 
 ```
-cd api_yamdb
-```
-
-Cоздать и активировать виртуальное окружение:
-
-```
-python3 -m venv venv
+https://github.com/shmyrev/infra_sp2.git
 ```
 
 ```
-source venv/bin/activate (for Linux)
+cd infra_sp2/
 ```
 
-Обновить pip до последней версии:
-```
-python3 -m pip install --upgrade pip
-```
-
-Установить зависимости из файла requirements.txt:
+Переходим в папку с файлом docker-compose.yaml:
 
 ```
-pip install -r requirements.txt
+cd infra/
 ```
 
-Дополнительно установить модули django_filters, Simple JWT и dotenv:
+Создаем .env файл:
 
 ```
-pip install django-filter djangorestframework_simplejwt python-dotenv
+nano .env
 ```
 
-Выполнить миграции:
+Вносим эти данные:
 
 ```
-python3 manage.py migrate
+DB_ENGINE=django.db.backends.postgresql # указываем, что работаем с postgresql
+
+DB_NAME=postgres # имя базы данных
+
+POSTGRES_USER=postgres # логин для подключения к базе данных
+
+POSTGRES_PASSWORD=postgres # пароль для подключения к БД (установите свой)
+
+DB_HOST=db # название сервиса (контейнера)
+
+DB_PORT=5432 # порт для подключения к БД
 ```
 
-Запустить проект:
+Запускаем docker compose командой:
 
 ```
-python3 manage.py runserver
+docker-compose up -d --build
 ```
 
-### Примеры использования API:
+Запускаем миграцмм:
+
+```
+docker-compose exec web python manage.py migrate
+```
+
+Создаем суперпользователя:
+
+```
+docker-compose exec web python manage.py createsuperuser
+```
+
+Создаем статику:
+
+```
+docker-compose exec web python manage.py collectstatic --no-input
+```
+
+Создаем дамп базы данных:
+
+```
+docker-compose exec web python manage.py dumpdata > fixtures.json
+```
+
+Останавть контейнер:
+
+```
+docker-compose down -v
+```
+
+
+## Примеры использования API:
 
 ```
 Дитальное описание и примеры работы API проекта представлены в 
-документации: http://127.0.0.1:8000/redoc/ в формате ReDoc.
+документации: http://localhost/redoc/ в формате ReDoc.
 ```
 
-### Используется:
+
+## Примеры использования api:
+
+Получение произведений:
 
 ```
-Python 3.9 Django 3.2 Simple JWT
+GET /api/v1/titles/
 ```
->>>>>>> develop
+
+Добавление произведения (только администратор):
+
+```
+POST /api/v1/titles/
+```
+
+В параметрах передавать json
+
+```
+{
+    "name": "Название произведения",
+    "year": 1990,
+    "description": "Описание произведения",
+    "genre": [
+    "fantasy"
+    ],
+    "category": "films"
+}
+```
+
+## Используется:
+
+```
+Python 3.10 Django 3.2 Simple JWT
+```
+
