@@ -31,10 +31,6 @@ class User(AbstractUser):
     role = models.CharField(
         'Роль пользователя', max_length=15, choices=ROLES, default=USER)
 
-    class Meta:
-        verbose_name = "Пользователь"
-        verbose_name_plural = "Пользователи"
-
     @property
     def is_admin(self):
         return self.role == ADMIN
@@ -45,3 +41,5 @@ class User(AbstractUser):
 
     class Meta:
         ordering = ('pk',)
+	verbose_name = "Пользователь"
+	verbose_name_plural = "Пользователи"
