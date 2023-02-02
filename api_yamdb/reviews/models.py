@@ -95,6 +95,7 @@ class Review(models.Model):
     )
     author = models.ForeignKey(
         User, on_delete=models.CASCADE,
+        null=True,
         related_name='reviews',
         verbose_name='Автор'
     )
@@ -138,6 +139,7 @@ class Comment(models.Model):
     )
     author = models.ForeignKey(
         User, on_delete=models.CASCADE,
+        null=True,
         related_name='comments',
         verbose_name='Автор'
     )

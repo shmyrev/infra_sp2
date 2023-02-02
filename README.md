@@ -72,6 +72,12 @@ docker-compose exec web python manage.py createsuperuser
 docker-compose exec web python manage.py collectstatic --no-input
 ```
 
+Заполнение базы тестовыми данными:
+
+```
+docker-compose exec web python manage.py loaddata fixtures.json
+```
+
 Создаем дамп базы данных:
 
 ```
@@ -91,9 +97,6 @@ docker-compose down -v
 Дитальное описание и примеры работы API проекта представлены в 
 документации: http://localhost/redoc/ в формате ReDoc.
 ```
-
-
-## Примеры использования api:
 
 Получение произведений:
 
