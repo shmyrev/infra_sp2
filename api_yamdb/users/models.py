@@ -34,11 +34,11 @@ class User(AbstractUser):
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     date_joined = models.DateTimeField(default=timezone.now)
-    
+
     @property
     def is_user(self):
         return self.role == USER
-    
+
     @property
     def is_admin(self):
         return self.role == ADMIN
