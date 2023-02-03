@@ -3,13 +3,11 @@ import os
 
 from dotenv import load_dotenv
 
-dotenv_path = os.path.join(os.path.dirname(__file__), 'infra_sp2/infra/.env')
-if os.path.exists(dotenv_path):
-    load_dotenv(dotenv_path)
+load_dotenv()
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-SECRET_KEY = os.getenv('TOKEN')
+SECRET_KEY = os.getenv('TOKEN', default='54321')
 
 DEBUG = False
 
